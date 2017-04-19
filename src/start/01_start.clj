@@ -235,6 +235,15 @@
 (or nil false [])
 
 
+(str "Regular Expressions")
+
+(comment
+  Regular expressions in clojure have an easy way as well. Just use a "#" before
+  the string. That's it!
+)
+
+(re-seq #".l+" "hello all of you on the ball of earth")
+
 
 (comment
   Continue your speedrun with 02_functions.clj
