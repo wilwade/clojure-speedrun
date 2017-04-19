@@ -196,7 +196,7 @@
   map, hash map or a sorted map or a set, but mostly you just need an array map.
 )
 
-{:a 2 :b 3 :c 4}
+(println {:a 2 :b 3 :c 4})
 
 (assoc {:a 2} :b 3 :c 4 "d" 5) ; Remember most things can take many things
 (dissoc {:a 2 :b 3} :b :c)

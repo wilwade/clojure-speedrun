@@ -38,8 +38,8 @@
   things that reduce can take.
 )
 
-(defn sum [& a]
-  (reduce add a))
+(defn sum [& xs]
+  (reduce add xs))
 
 (sum 1 2 3 4 5 6)
 
@@ -95,7 +95,7 @@
 (map (fn add-tuples [[a b]] (+ a b)) [[1 2] [2 3] [3 4]])
 
 
-(str "Map vs Reducer")
+(str "Map vs Reduce")
 
 (comment
   What is the difference between map and a reducer? A map is a

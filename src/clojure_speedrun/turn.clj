@@ -21,13 +21,13 @@
 
 (defn dealer-turn
   "Dealer takes a hit or not based on a simple sum"
-  [hands]
+  [hands draw-card-f]
   (let [dealer-hand (:dealer hands)
         dealer-sum (sum-hand dealer-hand)]
     (if (<= dealer-sum 17)
       (do
         (println "Dealer takes a hit")
-        (hit hands :dealer))
+        (hit hands :dealer draw-card-f))
       hands)))
 
 (defn hit-me
@@ -36,13 +36,13 @@
   (println "You take a hit")
   (-> hands
       (hit :player draw-card-f)
-      (dealer-turn)))
+      (dealer-turn draw-card-f)))
 
 (defn stand-me
   "I don't take a card"
-  [hands]
+  [hands draw-card-f]
   (println "You stand")
-  (dealer-turn hands))
+  (dealer-turn hands draw-card-f))
 
 (comment
   Continue your speedrun in test/clojure-speedrun/turn_test.clj
