@@ -38,8 +38,10 @@
   things that reduce can take.
 )
 
-(defn sum [& a]
-  (reduce add a))
+^{:p "(defn sum [& xs]
+  (reduce add xs))"}
+(defn sum [& xs]
+  (reduce add xs))
 
 (sum 1 2 3 4 5 6)
 
@@ -52,7 +54,8 @@
   Destructuring is also allowed, which is quite useful with maps or vectors.
 )
 
-; [{value "key" value2 :key ...}]
+^{:p "(defn add-map [{val-a \"a\" b :b}]
+  (add val-a b))"}
 (defn add-map [{val-a "a" b :b}]
   (add val-a b))
 
@@ -69,13 +72,25 @@
   functions.
 )
 
+^{:p "(defn add-me
+  ([one] (+ 100 one))
+  ([one two] (add-me one two 3))
+  ([one two three] (+ one two three)))"}
 (defn add-me
   ([one] (+ 100 one))
   ([one two] (add-me one two 3))
   ([one two three] (+ one two three)))
 
 (= 101 (add-me 1))
+(str "(defn add-me
+  ([one] (+ 100 one))
+  ([one two] (add-me one two 3))
+  ([one two three] (+ one two three)))")
 (= 6 (add-me 1 2))
+(str "(defn add-me
+  ([one] (+ 100 one))
+  ([one two] (add-me one two 3))
+  ([one two three] (+ one two three)))")
 (= 12 (add-me 1 4 7))
 
 
@@ -88,6 +103,7 @@
 )
 
 (map inc [1 2 3])
+^{:p "(map #(+ 2 %1) [1 2 3])"}
 (map #(+ 2 %1) [1 2 3])
 (map (fn [a] (+ 3 a)) [1 2 3])
 (map (fn add-four [a] (+ 4 a)) [1 2 3])
@@ -95,7 +111,7 @@
 (map (fn add-tuples [[a b]] (+ a b)) [[1 2] [2 3] [3 4]])
 
 
-(str "Map vs Reducer")
+(str "Map vs Reduce")
 
 (comment
   What is the difference between map and a reducer? A map is a
@@ -105,6 +121,11 @@
   function through a reduce function just to see.
 )
 
+^{:p "(defn my-map [f xs]
+  (reduce
+    #(conj %1 (f %2))
+    []
+    xs))"}
 (defn my-map [f xs]
   (reduce ; Here's that reduce
     ; conj appends things to a list or in this case a vector
@@ -121,6 +142,14 @@
 
 (str "Just def it")
 
+^{:p "(def config {
+  :twilio {
+    :key \"sdfsdfiewnfesifn\"
+    :account \"acbcorp\"
+  }
+  :more :config
+  :enabled? false
+})"}
 (def config {
   :twilio {
     :key "sdfsdfiewnfesifn"

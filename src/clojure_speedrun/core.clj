@@ -11,7 +11,7 @@
 )
 
 ; You can run this in the REPL. Here's how to get it going, just skip #_
-#_ (load "clojure_speedrun/core")
+#_ (load "/clojure_speedrun/core")
 #_ (in-ns 'clojure-speedrun.core)
 
 ; Start a hand:
@@ -20,6 +20,8 @@
 #_ (take-turn :hit)
 ; Stand:
 #_ (take-turn :stand)
+; End Round:
+#_ (take-turn :end)
 
 ; See the destructuring in the let statement?
 (defn first-turn
@@ -37,7 +39,7 @@
     (= 0 @state/turn) (first-turn)
     hit (t/hit-me hands state/draw-card!)
     ; :else. Keywords are always true, so :else is an easy to read catch all
-    :else (t/stand-me hands)))
+    :else (t/stand-me hands state/draw-card!)))
 
 (defn format-card
   [card]

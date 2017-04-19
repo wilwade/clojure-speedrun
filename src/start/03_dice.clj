@@ -7,17 +7,21 @@
 
 (def simple-d6 (map inc (range 6)))
 
-(println simple-d6)
+simple-d6
 
 
 (str "Threading Macros")
 
+^{:p "(def better-d6
+  (->> 6
+       range
+       (map inc)))"}
 (def better-d6
   (->> 6
        range
        (map inc)))
 
-(println better-d6)
+better-d6
 
 (comment
   Macros are bits of code that run at compile time, or before the rest of the
@@ -41,17 +45,25 @@
 
 (str "Multi-die")
 
+^{:p "(defn any-d [d]
+  (range 1 (inc d)))"}
 (defn any-d [d]
   (range 1 (inc d)))
 
-(println (any-d 8))
+(any-d 20)
 
+^{:p "(defn roll [d]
+  (->> d
+       any-d
+       rand-nth))"}
 (defn roll [d]
   (->> d
        any-d
        rand-nth))
 
-(roll 8)
+(roll 20)
+
+(roll 20)
 
 
 (comment
@@ -63,13 +75,18 @@
 
 (str "Custom Die")
 
+^{:p "(def space-die
+  (list :star :planet :gas-giant :comet :astroid-belt :dwarf-planet))"}
 (def space-die
   (list :star :planet :gas-giant :comet :astroid-belt :dwarf-planet))
 
-(defn roll-space-dice []
+^{:p "(defn roll-space-die []
+  (rand-nth space-die))"}
+(defn roll-space-die []
   (rand-nth space-die))
 
-(println (roll-space-dice))
+(roll-space-die)
+(roll-space-die)
 
 
 (str "Lazy is a Virtue")
@@ -81,24 +98,35 @@
   have to. So we can create things like infinite series of space dice results!
 )
 
-(take 3 (repeatedly roll-space-dice))
+(take 3 (repeatedly roll-space-die))
+(take 5 (repeatedly roll-space-die))
 
 (comment
   So we just took three off of a list of infinite length! We can do some more
   transformations on the infinite list however...
 )
 
-(->> roll-space-dice
+^{:p "(->> roll-space-die
      repeatedly
-     (map name) ; name takes a keyword and casts to a string
+     (map name)
+     (take 5))"}
+(->> roll-space-die
+     repeatedly
+     (map name)
      (take 5))
 
 ; Fancier? How about we skip the roll part?
-
+^{:p "(->> (fn [] space-die)
+     repeatedly
+     (map rand-nth)
+     (map name)
+     (map clojure.string/capitalize)
+     (take 5))"}
 (->> (fn [] space-die)
      repeatedly
      (map rand-nth)
      (map name)
+     (map clojure.string/capitalize)
      (take 5))
 
 (comment
@@ -123,6 +151,10 @@
   function "comp".
 )
 
+^{:p "(def roll-for-str
+  (comp
+    (map rand-nth)
+    (map name)))"}
 (def roll-for-str
   (comp
     (map rand-nth)

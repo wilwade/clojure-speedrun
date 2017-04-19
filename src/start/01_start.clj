@@ -97,8 +97,10 @@
 
 ; or the short hand way using a quote which you should read about sometime later
 
+^{:p "'(1 2 3 4 5)"}
 '(1 2 3 4 5)
 
+^{:p "(= (list 1 2 3 4 5) '(1 2 3 4 5))"}
 (= (list 1 2 3 4 5) '(1 2 3 4 5))
 
 (comment
@@ -125,12 +127,19 @@
   (let [var val var val ...] do stuff with vars)
 )
 
+^{:p "(let [a 5
+      b 6]
+  (+ a b))"}
 (let [a 5
       b 6]
   (+ a b))
 
 ; A let block also allows the first thing defined to be used in defining more
 
+^{:p "(let [a 5
+      b (+ a 1)
+      c (+ a b 1)]
+  (= c 12))"}
 (let [a 5
       b (+ a 1)
       c (+ a b 1)]
@@ -151,6 +160,12 @@
   are always NEW things.
 )
 
+^{:p "(let [a 5]
+  (println a)
+  (println (inc a)) ; the same as (+ a 1)
+  (println (inc a)) ; the same as (+ a 1)
+  (println (dec a)) ; the same as (- a 1)
+  (println a))"}
 (let [a 5]
   (println a)
   (println (inc a)) ; the same as (+ a 1)
@@ -163,6 +178,9 @@
   Doesn't mean that you cannot re-let a name however, but it is not pointing to
   the same thing.)
 
+^{:p "(let [a 5
+      a 6]
+  a)"}
 (let [a 5
       a 6]
   a)
@@ -178,6 +196,7 @@
   Just play with them...
 )
 
+^{:p "(= (keyword \"test\") :test)"}
 (= (keyword "test") :test)
 
 (first [:a :b :c])
@@ -196,14 +215,17 @@
   map, hash map or a sorted map or a set, but mostly you just need an array map.
 )
 
-{:a 2 :b 3 :c 4}
+^{:p "{:a 2 :b 3 :c 4}"}
+(do {:a 2 :b 3 :c 4})
 
+^{:p "(assoc {:a 2} :b 3 :c 4 \"d\" 5)"}
 (assoc {:a 2} :b 3 :c 4 "d" 5) ; Remember most things can take many things
 (dissoc {:a 2 :b 3} :b :c)
 
 ; Maps can be functions...
 ({:a 2 :b 3} :a)
 
+^{:p "({\"a\" 2 \"b\" 3} \"a\")"}
 ({"a" 2 "b" 3} "a")
 
 ; Keywords can also be functions... (but not string keys)
@@ -222,6 +244,9 @@
   Clojure has one null and that is nil. And nil is falsey
 )
 
+^{:p "(if nil
+  (str \"True!\")
+  (str \"False!\"))"}
 (if nil
   (str "True!")
   (str "False!"))
@@ -234,6 +259,16 @@
 
 (or nil false [])
 
+
+(str "Regular Expressions")
+
+(comment
+  Regular expressions in clojure have an easy way as well. Just use a "#" before
+  the string. That's it!
+)
+
+^{:p "(re-seq #\".l+\" \"hello all of you on the ball of earth\")"}
+(re-seq #".l+" "hello all of you on the ball of earth")
 
 
 (comment

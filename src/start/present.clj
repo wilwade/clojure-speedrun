@@ -20,10 +20,15 @@
             (try
               (binding [*read-eval* false]
                 (read rdr))
-            (catch Exception e nil))]
-        (if form
-          (recur (conj forms form))
-          forms)))))
+            (catch Exception e nil))
+            print (:p (meta form))]
+        (cond
+          (and print form)
+            (recur (conj forms {:form form :print print}))
+          form
+            (recur (conj forms form))
+          :else
+            forms)))))
 
 (def parts
   (->>
@@ -46,11 +51,17 @@
 
 (def pre (atom true))
 
+(defn do-page-print
+  [form print]
+  (println print)
+  (eval form))
+
 (defn do-page
   [n]
   (let [form (nth-parts n)]
-    (println form)
-    (eval form)))
+    (if (map? form)
+      (do-page-print (:form form) (:print form))
+      (do-page-print form form))))
 
 (defn f []
   (swap! page #(min (inc %1) parts-count))
